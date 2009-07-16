@@ -1,0 +1,15 @@
+<mtapp:setting
+    id="facebook_app_key"
+    label="<__trans phrase="Facebook Application Key">"
+    hint="<__trans phrase="The key for the Facebook application associated with your blog.">"
+    show_hint="1">
+    <input name="facebook_app_key" id="facebook_app_key" value="<mt:var name="facebook_app_key" escape="html">" size="40" />
+    <mt:if name="facebook_app_key"><a href="http://www.facebook.com/developers/apps.php?&amp;api_key=<mt:var name="facebook_app_key" escape="url">" target="_blank"><__trans phrase="Edit Facebook App"></a><mt:else><a href="http://www.facebook.com/developers/editapp.php" target="__blank"><__trans phrase="Create Facebook App"></a></mt:if>
+</mtapp:setting>
+<mtapp:setting
+    id="facebook_app_secret"
+    label="<__trans phrase="Facebook Application Secret">"
+    hint="<__trans phrase="The secret for the Facebook application associated with your blog.">"
+    show_hint="1">
+    <input name="facebook_app_secret" id="facebook_app_secret" value="<mt:var name="facebook_app_secret" escape="html">" size="40" />
+</mtapp:setting>

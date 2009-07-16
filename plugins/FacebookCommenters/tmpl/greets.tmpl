@@ -1,0 +1,29 @@
+<script type="text/javascript">
+/* <![CDATA[ */
+window.api_key = '<$mt:var name="fb_api_key" escape="js"$>';
+window.xd_receiver_url = '<$mt:staticwebpath escape="js"$>plugins/FacebookCommenters/xd_receiver.html';
+
+function facebook_send_story() {
+    send_story('<$mt:EntryPermalink escape="js"$>',
+        '<$mt:EntryTitle escape="js"$>',
+        '<$mt:var name="facebook_story_template_id" escape="js"$>');
+}
+function facebook_onload() {
+    if ( window.location.hash && window.location.hash.match( /^#_logout/ ) ) {
+        facebook_logout();
+        return;
+    }
+    <mt:if name="facebook_send_story">
+    facebook_send_story();
+    </mt:if>
+    <mt:if name="facebook_apply_commenter_data">
+    apply_commenter_data();
+    </mt:if>
+}
+mtAttachEvent('commentposted', facebook_send_story);
+mtAttachEvent('load', facebook_onload);
+/* ]]> */
+</script>
+<script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
+<link type="text/css" rel="stylesheet" href="http://static.ak.connect.facebook.com/css/fb_connect.css" />
+<script type="text/javascript" src="<$mt:staticwebpath escape="html"$>plugins/FacebookCommenters/signface.js"></script>

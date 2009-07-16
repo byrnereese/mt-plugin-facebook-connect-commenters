@@ -1,0 +1,47 @@
+<div class="comment<mt:If name="__last__"> last</mt:If>"<mt:IfArchiveTypeEnabled archive_type="Individual"> id="comment-<$mt:CommentID$>"</mt:IfArchiveTypeEnabled>>
+    <div class="inner">
+        <div class="comment-header">
+            <div class="asset-meta">
+<mt:if tag="CommenterAuthType" eq="Facebook">
+              <div class="user-pic comment-fb-<$MTCommenterUsername>">
+                  <a href="http://www.facebook.com/profile.php?id=<$MTCommenterUsername>" class="auth-icon"><img src="<$MTCommenterAuthIconURL size="logo_small"$>" alt="<$mt:CommenterAuthType$>"/></a>
+                  <fb:profile-pic uid="<$MTCommenterUsername>" size="square" linked="true"><img src="http://static.ak.connect.facebook.com/pics/q_default.gif" /></fb:profile-pic>
+              </div>
+<mt:else>
+                <$mt:Include module="<__trans phrase="Userpic">" userpic_size="36" userpic_type="commenter"$>
+</mt:if>
+                <span class="byline">
+                    <$mt:CommentAuthorIdentity$>
+<mt:setvarblock name="comment_author_link">
+                        <span class="vcard author">
+<mt:if tag="CommenterAuthType" eq="Facebook">
+                      <fb:name uid="<$MTCommenterUsername>" linked="true" useyou="false"><a href="http://www.facebook.com/profile.php?id=<$MTCommenterUsername>"><$MTCommenterName></a></fb:name>
+<mt:else>
+    <mt:IfCommenterIsAuthor>
+                                <a href="<$mt:Var name="profile_view_url" encode_html="1"$><$mt:CommenterID$>"><$mt:CommenterName encode_html="1"$></a>
+        <mt:Else>
+                                <$mt:CommentAuthorLink$>
+    </mt:IfCommenterIsAuthor>
+</mt:if>
+                        </span>
+</mt:setvarblock>
+<mt:IfCommentParent>
+                    <__trans phrase="[_1] replied to <a href="[_2]">comment from [_3]</a>" params="<$mt:var name="comment_author_link"$>%%<mt:CommentParent><$mt:CommentLink$></mt:CommentParent>%%<mt:CommentParent><$mt:CommentAuthor$></mt:CommentParent>">
+<mt:Else>
+                    <$mt:var name="comment_author_link"$>
+</mt:IfCommentParent>
+                    <span class="separator">|</span> <a href="<$mt:CommentLink$>"><abbr class="published" title="<$mt:CommentDate format_name="iso8601"$>"><$mt:CommentDate$></abbr></a>
+<mt:Unless name="comment">
+    <mt:IfCommentsAccepted>
+                    <span class="separator">|</span> <$mt:CommentReplyToLink$>
+    </mt:IfCommentsAccepted>
+</mt:Unless>
+                </span>
+            </div>
+        </div>
+        <div class="comment-content">
+            <$mt:CommentBody$>
+        </div>
+    </div>
+</div>
+
