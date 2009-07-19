@@ -7,7 +7,7 @@ our $instance = __PACKAGE__->new({
     key         => 'FacebookCommenters',
     name        => 'Facebook Commenters',
     description => '<MT_TRANS phrase="Provides commenter registration through Facebook Connect.">',
-    version     => '1.1',
+    version     => '1.1.1',
     author_name => 'Six Apart, Ltd.',
     author_link => 'http://www.sixapart.com/',
     plugin_link => 'http://www.sixapart.com/',
@@ -118,6 +118,8 @@ EOF
         tags => {
             function => {
                 GreetFacebookCommenters => '$FacebookCommenters::FacebookCommenters::Plugin::tag_greet',
+		FacebookApplicationID => '$FacebookCommenters::FacebookCommenters::Plugin::tag_fb_app_id',
+		FacebookStoryTemplateID => '$FacebookCommenters::FacebookCommenters::Plugin::tag_fb_story_tmpl_id',
             },
         },
     });
@@ -200,6 +202,20 @@ sub save_config {
     local ($param->{facebook_story_template_id})
         = ref $response ? @$response : ($response);
     return $plugin->SUPER::save_config(@_);
+}
+
+sub tag_fb_story_tmpl_id {
+    my($ctx, $args, $cond) = @_;
+    my $blog     = $ctx->stash('blog');
+    my $scope = "blog:" . $blog->id;
+    return $instance->get_config_value('facebook_story_template_id',$scope);
+}
+
+sub tag_fb_app_id {
+    my($ctx, $args, $cond) = @_;
+    my $blog     = $ctx->stash('blog');
+    my $scope = "blog:" . $blog->id;
+    return $instance->get_config_value('facebook_app_key',$scope);
 }
 
 sub tag_greet {

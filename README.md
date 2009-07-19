@@ -55,9 +55,40 @@ Preferences -> Registration and ensure that User Registration is allowed.
 
 ## Template Code
 
-To add basic support for Facebook Connect, place the following tag in your Header template before the closing "head" tag.  This will enable Facebook Connect on your blog, but will not customize the display of your comments.
+### Embedding the Javascript into the Header
+
+To add basic support for Facebook Connect, you will need to add a non-trivial amount of Javascript into the HTML `<head>` of your web page. You have two choices in how to do this: the first is quick and easy and what most people should do, the second is designed for people who need to specify javascript manually. 
+
+**Using the GreetFacebookCommenters Slug (recommended)**
+
+A single template tag can be added to the HTML `<head>` of your web site. This one simple tag will output all the javascript the average Movable Type user will need. It is designed to work with Movable Type's default javascript.
 
     <$mt:GreetFacebookCommenters$>
+
+**Hand Coding the Javascript**
+
+Some users who prefer to hand edit their javascript code, or integrate with another toolkit like jQuery can use some derivative of the following javascript code fragment.
+
+    <script type="text/javascript">
+    /* <![CDATA[ */
+    window.api_key = '<$mt:FacebookApplicationID$>';
+    window.xd_receiver_url = '<$mt:StaticWebPath$>plugins/FacebookCommenters/xd_receiver.html';
+    function facebook_send_story() {
+      send_story('<$mt:EntryPermalink$>','<$mt:EntryTitle encode_js="1"$>','<$mt:FacebookStoryTemplateID$>');
+    }
+    $(document).ready( function () {
+      if ( window.location.hash && window.location.hash.match( /^#_logout/ ) ) {
+        facebook_logout();
+        return;
+      }
+      apply_commenter_data();
+    });
+    /* ]]> */
+    </script>
+    <script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
+    <script type="text/javascript" src="<$mt:StaticWebPath$>plugins/FacebookCommenters/signface.js"></script>
+
+### Displaying Facebook Profile Userpics
 
 To display a Facebook user's profile photo next to their comment, you will have to use a Comment Detail template which includes userpics.  The following template should work in most cases and http://www.movabletype.org/documentation/designer/publishing-comments-with-userpics.html is a useful guide to adding userpics to your templates.
 
