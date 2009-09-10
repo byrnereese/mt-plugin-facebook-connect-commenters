@@ -86,6 +86,7 @@ Some users who prefer to hand edit their javascript code, or integrate with anot
     /* ]]> */
     </script>
     <script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php"></script>
+    <script type="text/javascript" src="<$mt:StaticWebPath$>plugins/FacebookCommenters/fbconnect.js"></script>
     <script type="text/javascript" src="<$mt:StaticWebPath$>plugins/FacebookCommenters/signface.js"></script>
 
 ### Displaying Facebook Profile Userpics
