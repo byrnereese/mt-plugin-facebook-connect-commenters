@@ -32,7 +32,7 @@ function apply_commenter_data() {
         });
 
         // Hide the URL and "remember me" boxes
-        mtHide('comments-open-data');
+        jQuery('#comments-open-data').hide();
     });
 }
 

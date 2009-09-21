@@ -7,7 +7,7 @@ our $instance = __PACKAGE__->new({
     key         => 'FacebookCommenters',
     name        => 'Facebook Commenters',
     description => '<MT_TRANS phrase="Provides commenter registration through Facebook Connect.">',
-    version     => '1.1.1',
+    version     => '1.1.2',
     author_name => 'Six Apart, Ltd.',
     author_link => 'http://www.sixapart.com/',
     plugin_link => 'http://www.sixapart.com/',
