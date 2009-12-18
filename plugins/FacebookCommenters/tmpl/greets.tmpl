@@ -1,9 +1,14 @@
+<mt:ignore>
+This needs a major overhaul to update the API and pull in my latest code
+</mt:ignore>
 <script type="text/javascript">
 /* <![CDATA[ */
-window.api_key = '<$mt:var name="fb_api_key" escape="js"$>';
-window.xd_receiver_url = '<$mt:staticwebpath escape="js"$>plugins/FacebookCommenters/xd_receiver.html';
-
-function facebook_send_story() {
+var fb = {
+  api_key: '<$mt:FacebookApplicationID$>',
+  xd_receiver_url = '<$mt:StaticWebPath$>plugins/FacebookCommenters/xd_receiver.html'
+};
+// TODO - this needs to be updated
+function facebook_send_comment() {
     send_story('<$mt:EntryPermalink escape="js"$>',
         '<$mt:EntryTitle escape="js"$>',
         '<$mt:var name="facebook_story_template_id" escape="js"$>');

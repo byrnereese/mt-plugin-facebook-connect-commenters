@@ -1,0 +1,51 @@
+id: 'FacebookCommenters'
+key: 'FacebookCommenters'
+name: 'Facebook Commenters'
+description: Provides commenter registration through Facebook Connect.
+version: 1.2
+author_name: 'Byrne Reese, Endevver'
+author_link: 'http://endevver.com/'
+plugin_link: 'http://endevver.com/'
+l10n_class: 'FacebookCommenters::L10N'
+schema_version: 1
+
+default_templates:
+    base_path: templates
+    global:module:
+      facebook_js:
+        label: 'Facebook Connect Javascript'
+
+config_settings:
+  FacebookApiServer:
+    default: 'http://api.new.facebook.com/restserver.php'
+
+options:
+  fieldsets:
+    auth:
+      label: 'Authentication'
+  facebook_app_key:
+    type: 'text'
+    label: 'Facebook Application Key'
+    hint: 'The key for the Facebook application associated with your blog. <a href="http://www.facebook.com/developers/editapp.php">Create Facebook Application</a>'
+    default: ''
+    scope: 'blog'
+    fieldset: 'auth'
+    tag: FacebookApplicationID
+  facebook_app_secret:
+    type: 'text'
+    label: 'Facebook Application Secret'
+    hint: 'The secret for the Facebook application associated with your blog.'
+    default: ''
+    scope: 'blog'
+    fieldset: 'auth'
+
+callbacks:
+  MT::App::Comments::template_param.login: $FacebookCommenters::FacebookCommenters::Plugin::login_xfrm_param 
+  MT::App::init_app: $FacebookCommenteres::FacebookCommenters::Plugin::init_app
+
+commenter_authenticators: $FacebookCommenters::FacebookCommenters::Plugin::load_auth
+
+tags:
+  function:
+    GreetFacebookCommenters: $FacebookCommenters::FacebookCommenters::Plugin::tag_greet
+

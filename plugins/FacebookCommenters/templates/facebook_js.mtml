@@ -1,0 +1,36 @@
+<script type="text/javascript">
+/* <![CDATA[ */
+    /* BEGIN Facebook Connect Info */
+    var fb = {
+      api_key: '<$mt:FacebookApplicationID$>',
+      xd_receiver_url: '<$mt:StaticWebPath$>plugins/FacebookCommenters/xd_receiver.html'
+    };
+    var story = {
+      title: '<$mt:EntryTitle encode_js="1"$>',
+      url: '<$mt:EntryPermalink$>',
+      excerpt: '<$mt:EntryExcerpt encode_js="1"$>',
+      xid: 'entry-<$mt:EntryID$>',
+      blog_name: '<$mt:BlogName encode_js="1"$>',
+      blog_url: '<$mt:BlogURL encode_js="1"$>'
+    };
+    var image; // set this to the struct below to contain an image in your wall post
+/*
+    image = {
+      type: 'image',
+      src: 'URL of image',
+      href: 'URL image will be linked to'
+    };
+*/
+    function facebook_send_comment(comment) {
+      send_comment(fb, story, image, comment);
+    }
+    $(document).ready( function () {
+      if ( window.location.hash && window.location.hash.match( /^#_logout/ ) ) {
+        facebook_logout(fb);
+        return;
+      }
+      apply_commenter_data(fb);
+    });
+    /* END Facebook Connect Info */
+/* ]]> */
+</script>
