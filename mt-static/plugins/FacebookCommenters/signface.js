@@ -1,8 +1,8 @@
 
-function apply_commenter_data() {
+function apply_commenter_data(fb) {
     FB_RequireFeatures(["XFBML","Api"], function()
     {
-        FB.Facebook.init(window.api_key, window.xd_receiver_url);
+        FB.Facebook.init(fb.api_key, fb.xd_receiver_url);
 
         // Get the current logged in user
         var session = FB.Facebook.apiClient.get_session();
@@ -32,32 +32,41 @@ function apply_commenter_data() {
         });
 
         // Hide the URL and "remember me" boxes
-        jQuery('#comments-open-data').hide();
+        $('#comments-open-data').hide();
     });
 }
 
-function send_story(post_url, post_title, story_template_id) {
+function send_comment(fb, story, image, comment) {
     FB_RequireFeatures(["Api", "Connect"], function()
     {
-        FB.Facebook.init(window.api_key, window.xd_receiver_url);
+        FB.Facebook.init(fb.api_key, fb.xd_receiver_url);
         FB.Connect.get_status().waitUntilReady(function(status) {
-            FB.Connect.showFeedDialog(
-                story_template_id,
-                {
-                    "post_url": post_url,
-                    "post_title": post_title
-                },
-                "",
-                "",
-                FB.FeedStorySize.oneLine
-            );
+            var actionLinks = [
+                               { "text": "Read My Comment", "href": story.url + "#comment-" + comment.id },
+                               { "text": "Read Blog Post", "href": story.url }
+                              ];
+            FB.Connect.streamPublish(
+                                     '', // user message
+                                     {
+                                         name: story.title,
+                                         href: story.url,
+                                         description: comment.text,
+                                         caption: '{*actor*} posted a comment to "' + story.blog_name + '"',
+                                         comments_xid: story.xid,
+                                         media: [ image ]
+                                     },
+                                     actionLinks,
+                                     null, // target_id
+                                     null, // user message prompt
+                                     null  // callback
+                                     );
         });
     });
 }
 
-function facebook_logout() {
+function facebook_logout(fb) {
     FB_RequireFeatures(["Api", "Connect"], function() {
-        FB.Facebook.init(window.api_key, window.xd_receiver_url);
+        FB.Facebook.init(fb.api_key, fb.xd_receiver_url);
 
         // Get the current logged in user
         var session = FB.Facebook.apiClient.get_session();
