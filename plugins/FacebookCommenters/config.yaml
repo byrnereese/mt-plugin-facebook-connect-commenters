@@ -2,7 +2,7 @@ id: 'FacebookCommenters'
 key: 'FacebookCommenters'
 name: 'Facebook Commenters'
 description: Provides commenter registration through Facebook Connect.
-version: 1.2
+version: 1.2.1
 author_name: 'Byrne Reese, Endevver'
 author_link: 'http://endevver.com/'
 plugin_link: 'http://endevver.com/'
@@ -41,7 +41,7 @@ options:
 
 callbacks:
   MT::App::Comments::template_param.login: $FacebookCommenters::FacebookCommenters::Plugin::login_xfrm_param 
-  MT::App::init_app: $FacebookCommenteres::FacebookCommenters::Plugin::init_app
+  post_init: $FacebookCommenters::FacebookCommenters::Plugin::init_app
 
 commenter_authenticators: $FacebookCommenters::FacebookCommenters::Plugin::load_auth
 

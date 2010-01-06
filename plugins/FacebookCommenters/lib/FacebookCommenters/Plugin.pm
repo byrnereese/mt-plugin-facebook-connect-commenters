@@ -120,13 +120,12 @@ sub load_auth {
 # METHOD: init_app
 #
 # A callback handler which hooks into the MT::App::CMS::init_app callback
-# in order to override and wrap MT::CMS::Asset::complete_upload
+# in order to override and wrap MT::Template::ContextHandlers::_hdlr_comment_author_link
 my %target;
+my $old_comment_author_link = \&MT::Template::Context::_hdlr_comment_author_link;
 sub init_app {
     my ( $plugin, $app ) = @_;
 
-    # This plugin operates by overriding the method
-    # (MT::CMS::Asset::complete_upload)
     %target = (
         module => 'MT::Template::Context',
         method => '_hdlr_comment_author_link',
@@ -135,7 +134,7 @@ sub init_app {
 
     # Make sure that our app module has the method we're looking for
     # and grab a reference to it if so.
-    eval "require $target{module};"
+    eval "require MT::Template::ContextHandlers;"
       or die "Could not require $target{module}";
     $target{subref} = $target{module}->can( $target{method} );
 
@@ -171,22 +170,13 @@ sub init_app {
     );
 }
 
-our $old_comment_author_link = \&MT::Template::Context::_hdlr_comment_author_link;
-
 sub new_hdlr_comment_author_link {
     my ($ctx, $args) = @_;
-
     my $link = $old_comment_author_link->(@_);
-    
     my $commenter = $ctx->stash('commenter');
-    if (!$commenter) {
-        return $link;
-    }
+    if (!$commenter) { return $link; }
     my $auth_type = $commenter->auth_type || q{};
-    if ($auth_type ne 'Facebook') {
-        return $link;
-    }
-    
+    if ($auth_type ne 'Facebook') { return $link; }
     my $id = $commenter->name;
     return qq{<fb:name uid="$id" linked="true">$link</fb:name>};
 }

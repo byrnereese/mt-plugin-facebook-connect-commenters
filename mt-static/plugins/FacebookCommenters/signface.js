@@ -45,21 +45,24 @@ function send_comment(fb, story, image, comment) {
                                { "text": "Read My Comment", "href": story.url + "#comment-" + comment.id },
                                { "text": "Read Blog Post", "href": story.url }
                               ];
+            var options = {
+                name: story.title,
+                href: story.url,
+                description: comment.text,
+                caption: '{*actor*} posted a comment to "' + story.blog_name + '"',
+                comments_xid: story.xid
+            };
+            if (typeof image != 'undefined') {
+                options.media = [ image ];
+            }
             FB.Connect.streamPublish(
-                                     '', // user message
-                                     {
-                                         name: story.title,
-                                         href: story.url,
-                                         description: comment.text,
-                                         caption: '{*actor*} posted a comment to "' + story.blog_name + '"',
-                                         comments_xid: story.xid,
-                                         media: [ image ]
-                                     },
-                                     actionLinks,
-                                     null, // target_id
-                                     null, // user message prompt
-                                     null  // callback
-                                     );
+                '', // user message
+                options,
+                actionLinks,
+                null, // target_id
+                null, // user message prompt
+                null  // callback
+            );
         });
     });
 }
